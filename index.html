@@ -1,328 +1,537 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>Christmas Cantata RSVP</title>
-<meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,700;1,6..96,500&family=Source+Sans+3:wght@400;600;700&display=swap">
-<style>
-  /* Layout: a single concert-programme card. Masthead and details on top, the RSVP form below, the send step revealed after submit. */
-  :root {
-    --bg: #EEF2F6;
-    --paper: #FFFFFF;
-    --ink: #14213A;
-    --muted: #55627A;
-    --line: #D5DCE6;
-    --accent: #A3262F;
-    --accent-ink: #FFFFFF;
-    --field: #F6F8FB;
-    --ok: #1F6B4A;
-    --err: #B3261E;
-    --font-display: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
-    --font-body: "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #0C1424;
-      --paper: #131D33;
-      --ink: #EAF0F8;
-      --muted: #9FADC4;
-      --line: #2A3753;
-      --accent: #E5767C;
-      --accent-ink: #1A0D10;
-      --field: #0F182B;
-      --ok: #6FD3A2;
-      --err: #FF9A92;
-      color-scheme: dark;
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Christmas Cantata</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Cormorant+Garamond:wght@400;500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold-1: #d9b56d;
+      --gold-2: #f1d49b;
+      --gold-3: #b8872d;
+      --navy: #1d2d4c;
+      --navy-2: #0f2443;
+      --cream: #f9f3ea;
+      --paper: rgba(251, 248, 241, 0.86);
+      --line: rgba(143, 112, 47, 0.7);
+      --shadow: rgba(29, 29, 29, 0.18);
+      --star: rgba(175, 120, 32, 0.82);
     }
-  }
-  :root[data-theme="dark"] {
-    --bg: #0C1424;
-    --paper: #131D33;
-    --ink: #EAF0F8;
-    --muted: #9FADC4;
-    --line: #2A3753;
-    --accent: #E5767C;
-    --accent-ink: #1A0D10;
-    --field: #0F182B;
-    --ok: #6FD3A2;
-    --err: #FF9A92;
-    color-scheme: dark;
-  }
 
-  * { box-sizing: border-box; }
-  body {
-    background: var(--bg);
-    color: var(--ink);
-    font-family: var(--font-body);
-    font-size: 16px;
-    line-height: 1.5;
-    padding-block: 24px 40px;
-    padding-left: max(16px, env(safe-area-inset-left, 0px));
-    padding-right: max(16px, env(safe-area-inset-right, 0px));
-  }
-  .wrap { max-width: 560px; margin: 0 auto; display: grid; gap: 16px; }
+    * { box-sizing: border-box; }
 
-  .programme {
-    background: var(--paper);
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    overflow: hidden;
-  }
-  .masthead { padding: 28px 24px 22px; text-align: left; border-bottom: 1px solid var(--line); }
-  .church {
-    font-size: 13px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
-    color: var(--accent); margin: 0 0 10px;
-  }
-  h1 {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(2.2rem, 9vw, 3.1rem);
-    line-height: 1.04;
-    margin: 0;
-    text-wrap: balance;
-  }
-  h1 em { font-style: italic; font-weight: 500; }
-
-  .details { display: grid; grid-template-columns: 1fr 1fr; margin: 0; }
-  .details > div { padding: 16px 24px; min-width: 0; }
-  .details > div + div { border-left: 1px solid var(--line); }
-  .details .wide { grid-column: 1 / -1; border-left: 0; border-top: 1px solid var(--line); }
-  dt { font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 0 0 2px; }
-  dd { margin: 0; font-size: 18px; font-weight: 600; font-variant-numeric: tabular-nums; }
-  dd.soft { font-weight: 400; color: var(--muted); font-size: 16px; }
-
-  form, .send { padding: 24px; display: grid; gap: 22px; }
-  h2 { font-family: var(--font-display); font-size: 1.5rem; margin: 0; font-weight: 700; }
-  .lede { margin: -14px 0 0; color: var(--muted); }
-
-  .field { display: grid; gap: 6px; min-width: 0; }
-  fieldset.field { border: 0; padding: 0; margin: 0; }
-  label.q, legend.q { font-weight: 600; font-size: 16px; padding: 0; }
-  .hint { font-size: 14px; color: var(--muted); margin: 0; }
-  input[type="text"], input[type="number"], textarea {
-    width: 100%;
-    font: inherit;
-    color: var(--ink);
-    background: var(--field);
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    padding: 11px 12px;
-  }
-  textarea { resize: vertical; min-height: 150px; line-height: 1.45; font-size: 15px; }
-  input:focus-visible, textarea:focus-visible, button:focus-visible, a.btn:focus-visible {
-    outline: 3px solid var(--accent); outline-offset: 2px;
-  }
-  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-
-  .choice { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .choice input { position: absolute; opacity: 0; pointer-events: none; }
-  .choice label {
-    display: block; text-align: center; padding: 11px 12px;
-    border: 1px solid var(--line); background: var(--field); border-radius: 4px;
-    font-weight: 600; cursor: pointer;
-  }
-  .choice input:checked + label { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-  .choice input:focus-visible + label { outline: 3px solid var(--accent); outline-offset: 2px; }
-  .choice { position: relative; }
-
-  .error { color: var(--err); font-size: 14px; font-weight: 600; margin: 0; }
-
-  button.primary, a.btn {
-    font: inherit; font-weight: 700; text-align: center; text-decoration: none;
-    padding: 13px 18px; border-radius: 4px; cursor: pointer; display: block;
-    border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink);
-  }
-  a.btn.alt, button.alt {
-    background: transparent; color: var(--ink); border: 1px solid var(--ink);
-    font: inherit; font-weight: 600; padding: 13px 18px; border-radius: 4px; cursor: pointer;
-  }
-  .actions { display: grid; gap: 10px; }
-
-  .send { border-top: 1px solid var(--line); }
-  .notice { margin: 0; padding: 12px 14px; border-left: 4px solid var(--accent); background: var(--field); }
-  .addr { font-weight: 700; word-break: break-all; user-select: all; }
-  .copied { color: var(--ok); font-weight: 600; min-height: 1.4em; margin: 0; font-size: 14px; }
-
-  @media (max-width: 420px) {
-    .details { grid-template-columns: 1fr; }
-    .details > div + div { border-left: 0; border-top: 1px solid var(--line); }
-    .masthead, form, .send { padding-left: 18px; padding-right: 18px; }
-    .details > div { padding-left: 18px; padding-right: 18px; }
-    .pair { grid-template-columns: 1fr; }
-  }
-</style>
-
-<main class="wrap">
-  <article class="programme">
-    <header class="masthead">
-      <p class="church">N.B.B.C</p>
-      <h1>Christmas <em>Cantata</em></h1>
-    </header>
-    <dl class="details">
-      <div>
-        <dt>Date</dt>
-        <dd>Sunday, Dec 6, 2026</dd>
-      </div>
-      <div>
-        <dt>Time</dt>
-        <dd>3:00 – 6:00 PM</dd>
-      </div>
-      <div class="wide">
-        <dt>Address</dt>
-        <dd class="soft">To be announced</dd>
-      </div>
-    </dl>
-
-    <form id="rsvp" novalidate>
-      <div>
-        <h2>Will you join us?</h2>
-      </div>
-      <p class="lede">Fill in the details below, then send your reply by email.</p>
-
-      <div class="field">
-        <label class="q" for="name">Your name</label>
-        <input type="text" id="name" name="name" autocomplete="name" placeholder="Full name">
-        <p class="error" id="err-name" hidden></p>
-      </div>
-
-      <div class="pair">
-        <div class="field">
-          <label class="q" for="persons">How many persons?</label>
-          <input type="number" id="persons" name="persons" min="1" max="50" step="1" value="1" inputmode="numeric">
-          <p class="hint">Everyone coming, kids included.</p>
-        </div>
-        <div class="field">
-          <label class="q" for="kids">How many kids?</label>
-          <input type="number" id="kids" name="kids" min="0" max="50" step="1" value="0" inputmode="numeric">
-          <p class="hint">Part of the total.</p>
-        </div>
-      </div>
-      <p class="error" id="err-count" hidden></p>
-
-      <fieldset class="field">
-        <legend class="q">Will you attend the church morning service?</legend>
-        <div class="choice">
-          <input type="radio" id="svc-yes" name="service" value="Yes"><label for="svc-yes">Yes</label>
-          <input type="radio" id="svc-no" name="service" value="No"><label for="svc-no">No</label>
-        </div>
-        <p class="error" id="err-service" hidden></p>
-      </fieldset>
-
-      <fieldset class="field">
-        <legend class="q">Will you attend the Cantata only?</legend>
-        <div class="choice">
-          <input type="radio" id="can-yes" name="cantata" value="Yes"><label for="can-yes">Yes</label>
-          <input type="radio" id="can-no" name="cantata" value="No"><label for="can-no">No</label>
-        </div>
-        <p class="error" id="err-cantata" hidden></p>
-      </fieldset>
-
-      <button type="submit" class="primary" id="submit">Prepare my RSVP</button>
-    </form>
-
-    <section class="send" id="send" hidden aria-live="polite">
-      <h2>Send your reply</h2>
-      <p class="notice">Your RSVP is ready but not sent yet. It goes to the host once you press send in your email.</p>
-      <div class="field">
-        <label class="q" for="preview">Your message</label>
-        <textarea id="preview" readonly></textarea>
-      </div>
-      <div class="actions">
-        <a class="btn" id="gmail" href="#" target="_blank" rel="noopener">Open in Gmail</a>
-        <a class="btn alt" id="mailto" href="#">Open in my mail app</a>
-        <button type="button" class="alt" id="copy">Copy message</button>
-      </div>
-      <p class="copied" id="copied" role="status"></p>
-      <p class="hint">If a button does nothing, copy the message and email it to<br><span class="addr" id="addr">jonas.antonio0824@gmail.com</span></p>
-      <button type="button" class="alt" id="edit">Change my answers</button>
-    </section>
-  </article>
-</main>
-
-<script>
-(function () {
-  var TO = "jonas.antonio0824@gmail.com";
-  var SUBJECT = "RSVP: N.B.B.C Christmas Cantata, Dec 6, 2026";
-  var $ = function (id) { return document.getElementById(id); };
-
-  function setErr(id, msg) {
-    var el = $(id);
-    if (msg) { el.textContent = msg; el.hidden = false; } else { el.hidden = true; }
-    return !msg;
-  }
-  function radio(name) {
-    var el = document.querySelector('input[name="' + name + '"]:checked');
-    return el ? el.value : "";
-  }
-  function whole(v) {
-    var n = Number(v);
-    return v !== "" && isFinite(n) && Math.floor(n) === n ? n : NaN;
-  }
-
-  $("rsvp").addEventListener("submit", function (e) {
-    e.preventDefault();
-    var name = $("name").value.trim();
-    var persons = whole($("persons").value.trim());
-    var kids = whole($("kids").value.trim());
-    var service = radio("service");
-    var cantata = radio("cantata");
-
-    var ok = true;
-    ok = setErr("err-name", name ? "" : "Please enter your name.") && ok;
-    var countMsg = "";
-    if (isNaN(persons) || persons < 1) countMsg = "Enter at least 1 person.";
-    else if (isNaN(kids) || kids < 0) countMsg = "Enter 0 or more kids.";
-    else if (kids > persons) countMsg = "Kids cannot be more than the total number of persons.";
-    ok = setErr("err-count", countMsg) && ok;
-    ok = setErr("err-service", service ? "" : "Please choose Yes or No.") && ok;
-    ok = setErr("err-cantata", cantata ? "" : "Please choose Yes or No.") && ok;
-    if (!ok) return;
-
-    var body = [
-      "RSVP for the N.B.B.C Christmas Cantata",
-      "Sunday, December 6, 2026, 3:00 PM to 6:00 PM",
-      "",
-      "Name: " + name,
-      "Number of persons: " + persons,
-      "Number of kids: " + kids,
-      "Attending church morning service: " + service,
-      "Attending Cantata only: " + cantata
-    ].join("\n");
-
-    $("preview").value = body;
-    var q = "&su=" + encodeURIComponent(SUBJECT) + "&body=" + encodeURIComponent(body);
-    $("gmail").href = "https://mail.google.com/mail/?view=cm&fs=1&to=" + encodeURIComponent(TO) + q;
-    $("mailto").href = "mailto:" + TO + "?subject=" + encodeURIComponent(SUBJECT) + "&body=" + encodeURIComponent(body);
-    $("copied").textContent = "";
-    $("send").hidden = false;
-    $("rsvp").hidden = true;
-    $("send").scrollIntoView({ behavior: "smooth", block: "start" });
-  });
-
-  $("edit").addEventListener("click", function () {
-    $("send").hidden = true;
-    $("rsvp").hidden = false;
-    $("name").focus();
-  });
-
-  function fallbackCopy() {
-    var ta = $("preview");
-    ta.focus();
-    ta.select();
-    var done = false;
-    try { done = document.execCommand("copy"); } catch (err) { done = false; }
-    $("copied").textContent = done ? "Message copied." : "Message selected. Press and hold to copy it.";
-  }
-  $("copy").addEventListener("click", function () {
-    var text = $("preview").value;
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(function () {
-        $("copied").textContent = "Message copied.";
-      }, fallbackCopy);
-    } else {
-      fallbackCopy();
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: "Source Sans 3", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 50% 8%, rgba(255,255,255,0.45), transparent 18%),
+        radial-gradient(circle at 10% 16%, rgba(255,255,255,0.24), transparent 18%),
+        radial-gradient(circle at 90% 14%, rgba(255,255,255,0.20), transparent 18%),
+        radial-gradient(circle at 50% 35%, rgba(255,255,255,0.16), transparent 40%),
+        linear-gradient(180deg, #f5efe5 0%, #f2e9df 16%, #f4efe6 100%);
+      color: var(--navy);
     }
-  });
-})();
-</script>
 
-</body></html>
+    body {
+      position: relative;
+      overflow-x: hidden;
+      padding: 36px 18px 42px;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 22%, rgba(255,255,255,0.7) 0 2%, transparent 3%),
+        radial-gradient(circle at 52% 18%, rgba(255,255,255,0.7) 0 2%, transparent 3%),
+        radial-gradient(circle at 78% 26%, rgba(255,255,255,0.7) 0 2%, transparent 3%),
+        radial-gradient(circle at 18% 48%, rgba(255,255,255,0.7) 0 2%, transparent 3%),
+        radial-gradient(circle at 82% 52%, rgba(255,255,255,0.7) 0 2%, transparent 3%),
+        radial-gradient(circle at 30% 78%, rgba(255,255,255,0.7) 0 2%, transparent 3%),
+        radial-gradient(circle at 70% 80%, rgba(255,255,255,0.7) 0 2%, transparent 3%);
+      opacity: 0.9;
+      pointer-events: none;
+      filter: blur(1.5px);
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+      background: rgba(255, 250, 244, 0.4);
+      border: 2px solid rgba(181, 145, 72, 0.9);
+      border-radius: 16px;
+      box-shadow: 0 30px 60px rgba(25, 27, 44, 0.14);
+      overflow: hidden;
+      padding: 24px 18px 14px;
+    }
+
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.5), transparent 58%),
+        linear-gradient(180deg, rgba(255,255,255,0.22), rgba(255,255,255,0.08));
+      pointer-events: none;
+    }
+
+    .frame {
+      position: relative;
+      z-index: 1;
+      max-width: 920px;
+      margin: 0 auto;
+      background: rgba(255, 251, 246, 0.78);
+      border: 1px solid rgba(157, 121, 55, 0.8);
+      border-radius: 12px;
+      padding: 22px 18px 10px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.4);
+    }
+
+    .seal-wrap {
+      display: flex;
+      justify-content: center;
+      margin-top: 18px;
+      margin-bottom: 8px;
+    }
+
+    .seal {
+      width: min(54vw, 380px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: 4px solid var(--gold-1);
+      background: radial-gradient(circle at 50% 32%, rgba(247, 240, 221, 0.96) 0 34%, rgba(255,255,255,0.98) 35%, rgba(247, 233, 195, 0.96) 100%);
+      position: relative;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 0 0 6px rgba(219, 179, 97, 0.2);
+    }
+
+    .seal::before,
+    .seal::after {
+      content: "";
+      position: absolute;
+      inset: 8%;
+      border: 2px solid rgba(188, 145, 58, 0.7);
+      border-radius: 50%;
+    }
+
+    .seal::after {
+      inset: 18%;
+      border-color: rgba(188, 145, 58, 0.35);
+    }
+
+    .seal-inner {
+      position: relative;
+      width: 70%;
+      height: 70%;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      z-index: 2;
+      text-align: center;
+      color: var(--navy);
+      padding: 14px;
+    }
+
+    .seal-inner .top-mark {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      letter-spacing: 0.28em;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--gold-3);
+      transform: rotate(-18deg);
+      opacity: 0.8;
+    }
+
+    .seal-inner .shield {
+      position: relative;
+      width: 94px;
+      height: 118px;
+      border-radius: 18px 18px 26px 26px;
+      background: linear-gradient(180deg, #12325a 0%, #1c3c6d 32%, #fbe6a3 33%, #b88c32 34%, #f0d387 61%, #1d3057 62%, #d4a64d 100%);
+      box-shadow: inset 0 0 0 4px rgba(255,255,255,0.35);
+      transform: rotate(0deg);
+      overflow: hidden;
+    }
+
+    .seal-inner .shield::before {
+      content: "";
+      position: absolute;
+      inset: 16px 18px 12px;
+      border-radius: 15px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.17), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.26);
+    }
+
+    .seal-inner .shield::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 10px;
+      width: 54px;
+      height: 36px;
+      border-radius: 50% 50% 42% 42% / 80% 80% 20% 20%;
+      background: linear-gradient(180deg, #e6c77a, #9c7828);
+      box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.3);
+    }
+
+    .seal-text {
+      position: relative;
+      z-index: 2;
+      margin-top: 12px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      font-size: 14px;
+      color: var(--navy);
+      text-transform: uppercase;
+    }
+
+    .seal-text .small {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      margin-top: 4px;
+      opacity: 0.8;
+    }
+
+    .title-block {
+      text-align: center;
+      padding-top: 6px;
+      position: relative;
+    }
+
+    .title-block h1 {
+      margin: 0;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 600;
+      line-height: 0.76;
+      letter-spacing: -0.04em;
+      font-size: clamp(3.4rem, 7vw, 8.2rem);
+      color: var(--gold-3);
+      font-style: italic;
+      text-shadow: 0 0 0 rgba(0,0,0,0);
+    }
+
+    .title-block h1 .caps {
+      display: block;
+      letter-spacing: 0.04em;
+      font-weight: 700;
+      font-style: normal;
+      margin-top: 0.06em;
+    }
+
+    .subtitle {
+      margin: 10px auto 14px;
+      text-align: center;
+      letter-spacing: 0.46em;
+      text-transform: uppercase;
+      color: var(--navy);
+      font-weight: 700;
+      font-size: clamp(0.78rem, 1.5vw, 1.25rem);
+      opacity: 0.9;
+      border-top: 1px solid rgba(177, 135, 50, 0.7);
+      border-bottom: 1px solid rgba(177, 135, 50, 0.7);
+      padding: 12px 10px 10px;
+      max-width: 760px;
+      position: relative;
+    }
+
+    .subtitle::before,
+    .subtitle::after {
+      content: "✦";
+      position: relative;
+      color: var(--gold-3);
+      margin: 0 12px;
+      font-size: 0.95em;
+    }
+
+    .intro {
+      max-width: 760px;
+      margin: 0 auto 20px;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(1.5rem, 2vw, 2.3rem);
+      line-height: 1.18;
+      text-align: center;
+      font-style: italic;
+      color: #183053;
+      font-weight: 500;
+    }
+
+    .program {
+      border-top: 2px solid rgba(175, 132, 46, 0.7);
+      border-bottom: 2px solid rgba(175, 132, 46, 0.7);
+      margin: 0 auto 22px;
+      max-width: 860px;
+      padding: 18px 0 10px;
+      position: relative;
+    }
+
+    .program-head {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      text-align: center;
+      font-size: clamp(0.8rem, 1.5vw, 1.1rem);
+      font-weight: 800;
+      letter-spacing: 0.28em;
+      color: var(--gold-3);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .program-head::before,
+    .program-head::after {
+      content: "◆";
+      font-size: 0.8em;
+      color: var(--gold-3);
+    }
+
+    .list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 28px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+      padding: 10px 0 9px;
+      border-bottom: 1px dashed rgba(154, 124, 60, 0.7);
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(1.2rem, 2vw, 1.8rem);
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .list li .num {
+      width: 26px;
+      font-family: "Source Sans 3", Arial, sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      color: var(--navy);
+      opacity: 0.92;
+      flex-shrink: 0;
+    }
+
+    .list li .title {
+      flex: 1;
+      min-width: 0;
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    .list li .tag {
+      display: inline-block;
+      padding: 3px 8px 2px;
+      border-radius: 22px;
+      background: rgba(214, 175, 95, 0.15);
+      border: 1px solid rgba(185, 145, 54, 0.6);
+      font-family: "Source Sans 3", Arial, sans-serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--navy);
+      white-space: nowrap;
+      margin-left: auto;
+    }
+
+    .info-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 26px auto 0;
+      max-width: 980px;
+    }
+
+    .info-card {
+      background: linear-gradient(180deg, #102a4a 0%, #1d375e 100%);
+      color: #f2f4fb;
+      border-radius: 12px;
+      min-height: 150px;
+      padding: 22px 20px 18px;
+      box-shadow: 0 10px 20px rgba(15, 28, 42, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .info-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.08), transparent 50%);
+      pointer-events: none;
+    }
+
+    .info-card .icon {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+      opacity: 0.9;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .info-card .icon::before {
+      content: "✦";
+      color: var(--gold-2);
+      font-size: 0.82em;
+    }
+
+    .info-card h3 {
+      margin: 0;
+      font-size: clamp(1.7rem, 2vw, 2.6rem);
+      line-height: 1.1;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .info-card p {
+      margin: 6px 0 0;
+      font-size: 1.05rem;
+      line-height: 1.5;
+      opacity: 0.96;
+    }
+
+    .footer-line {
+      max-width: 980px;
+      margin: 26px auto 0;
+      border-top: 2px solid rgba(175, 132, 46, 0.9);
+      border-bottom: 2px solid rgba(175, 132, 46, 0.9);
+      padding: 12px 10px 10px;
+      text-align: center;
+      font-size: clamp(0.9rem, 1.4vw, 1.15rem);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--navy);
+      font-weight: 800;
+      background: rgba(255,255,255,0.12);
+    }
+
+    .footer-line .spark {
+      color: var(--gold-3);
+      margin: 0 10px;
+    }
+
+    .follow {
+      text-align: center;
+      margin-top: 14px;
+      color: var(--navy-2);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      line-height: 1.6;
+      font-size: clamp(0.92rem, 1.5vw, 1.12rem);
+    }
+
+    .follow strong {
+      font-size: 1.08em;
+      letter-spacing: 0.02em;
+    }
+
+    .follow a {
+      color: #1d3a67;
+      text-decoration: none;
+      font-weight: 800;
+    }
+
+    @media (max-width: 760px) {
+      .frame { padding-left: 12px; padding-right: 12px; }
+      .list { grid-template-columns: 1fr; }
+      .info-row { grid-template-columns: 1fr; }
+      .seal { width: min(72vw, 310px); }
+      .subtitle { letter-spacing: 0.2em; }
+      .title-block h1 { line-height: 0.82; }
+      .follow { letter-spacing: 0.02em; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="frame">
+      <div class="seal-wrap">
+        <div class="seal" aria-label="Church seal">
+          <div class="seal-inner">
+            <div class="top-mark">N.B.B.C</div>
+            <div class="shield" aria-hidden="true"></div>
+            <div class="seal-text">
+              N.B.B.C
+              <span class="small">Nippon Bible Baptist Church</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="title-block">
+        <h1>Christmas <span class="caps">CANTATA</span></h1>
+      </div>
+
+      <div class="subtitle">A Night of Carols</div>
+
+      <p class="intro">
+        Our choir and children's choir invite you to celebrate the birth of Christ through timeless carols and joyful worship.
+      </p>
+
+      <div class="program" aria-label="Program list">
+        <div class="program-head">The Program</div>
+        <ul class="list">
+          <li><span class="num">1.</span><span class="title">Season of Light</span><span class="tag">Choir</span></li>
+          <li><span class="num">2.</span><span class="title">A Son Is Given</span><span class="tag">Choir</span></li>
+          <li><span class="num">3.</span><span class="title">Mary Did You Know?</span><span class="tag">Solo</span></li>
+          <li><span class="num">4.</span><span class="title">Worship Christ, the Newborn King</span><span class="tag">Choir</span></li>
+          <li><span class="num">5.</span><span class="title">Go Tell It on the Mountain</span><span class="tag">Kids</span></li>
+          <li><span class="num">6.</span><span class="title">Glory to God</span><span class="tag">Choir</span></li>
+          <li><span class="num">7.</span><span class="title">Hark! The Herald</span><span class="tag">Choir</span></li>
+          <li><span class="num">8.</span><span class="title">Joy to the World</span><span class="tag">Congregation</span></li>
+        </ul>
+      </div>
+
+      <div class="info-row">
+        <div class="info-card">
+          <div class="icon">When</div>
+          <h3>SUNDAY, DECEMBER 6, 2026</h3>
+          <p>3:00 PM – 6:00 PM</p>
+        </div>
+
+        <div class="info-card">
+          <div class="icon">Where</div>
+          <h3>3928 Shimazu, Ami, Inashiki District, Ibaraki 300-0311</h3>
+        </div>
+
+        <div class="info-card">
+          <div class="icon">Admission</div>
+          <h3>All are welcome</h3>
+          <p>Free Parking<br>Free snacks after</p>
+        </div>
+      </div>
+
+      <div class="footer-line"><span class="spark">✦</span> Invite a friend &amp; celebrate the reason for the season <span class="spark">✦</span></div>
+
+      <div class="follow">
+        Follow and contact us: <a href="https://www.facebook.com/nipponbiblebaptistchurch" target="_blank" rel="noopener">www.facebook.com/nipponbiblebaptistchurch</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
 
