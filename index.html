@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Christmas Cantata</title>
+  <title>Christmas Cantata RSVP</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Cormorant+Garamond:wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
@@ -19,6 +19,9 @@
       --ink: #122647;
       --soft-cream: #f4efe7;
       --shadow: rgba(22, 24, 33, 0.14);
+      --form-bg: rgba(255, 252, 248, 0.8);
+      --error: #b22b2b;
+      --success: #245c3d;
     }
 
     * { box-sizing: border-box; }
@@ -154,6 +157,217 @@
       font-style: italic;
       color: #1c2f4e;
       font-weight: 500;
+    }
+
+    .rsvp-card {
+      max-width: 860px;
+      margin: 0 auto 26px;
+      background: var(--form-bg);
+      border: 1px solid rgba(180, 139, 73, 0.8);
+      border-radius: 12px;
+      box-shadow: 0 10px 22px rgba(16, 20, 28, 0.06);
+      overflow: hidden;
+    }
+
+    .rsvp-header {
+      padding: 18px 22px 10px;
+      text-align: center;
+      border-bottom: 1px solid rgba(178, 138, 65, 0.75);
+      background: rgba(255,255,255,0.16);
+    }
+
+    .rsvp-header h2 {
+      margin: 0;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(2.1rem, 3vw, 3rem);
+      color: var(--navy);
+      line-height: 1;
+      font-weight: 700;
+    }
+
+    .rsvp-form {
+      padding: 20px 22px 22px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .field label,
+    .field legend {
+      font-weight: 700;
+      color: var(--navy);
+      font-size: 1rem;
+      letter-spacing: 0.01em;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea {
+      width: 100%;
+      padding: 12px 13px;
+      border: 1px solid rgba(180, 139, 73, 0.9);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.34);
+      color: var(--navy);
+      font: inherit;
+      outline: none;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    textarea:focus {
+      border-color: var(--gold-3);
+      box-shadow: 0 0 0 3px rgba(183, 125, 42, 0.12);
+    }
+
+    .choice-group {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .choice {
+      position: relative;
+    }
+
+    .choice input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .choice label {
+      display: block;
+      padding: 11px 12px;
+      border: 1px solid rgba(180, 139, 73, 0.9);
+      border-radius: 8px;
+      background: rgba(250, 244, 235, 0.6);
+      text-align: center;
+      font-weight: 700;
+      color: var(--navy);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .choice input:checked + label {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: white;
+    }
+
+    .help {
+      margin: 0;
+      font-size: 0.82rem;
+      color: rgba(29, 45, 76, 0.78);
+    }
+
+    .error {
+      margin: 0;
+      min-height: 18px;
+      color: var(--error);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .submit-btn {
+      border: none;
+      border-radius: 9px;
+      background: linear-gradient(180deg, var(--gold-1), var(--gold-3));
+      color: white;
+      font: inherit;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      padding: 14px 18px;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(183, 125, 42, 0.24);
+    }
+
+    .submit-btn:hover {
+      filter: brightness(1.02);
+    }
+
+    .send-box {
+      display: none;
+      background: rgba(255,255,255,0.34);
+      border: 1px solid rgba(180, 139, 73, 0.8);
+      border-radius: 12px;
+      padding: 20px 22px 18px;
+      margin: 0 auto 24px;
+      max-width: 860px;
+    }
+
+    .send-box.show {
+      display: block;
+    }
+
+    .send-box h3 {
+      margin: 0 0 12px;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(2rem, 3vw, 2.8rem);
+      color: var(--navy);
+      line-height: 1;
+    }
+
+    .send-box p.notice {
+      margin: 0 0 14px;
+      color: var(--navy);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    textarea#preview {
+      min-height: 180px;
+      resize: vertical;
+      font-size: 0.96rem;
+      line-height: 1.5;
+    }
+
+    .actions {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(180, 139, 73, 0.9);
+      color: var(--navy);
+      background: rgba(255,255,255,0.15);
+      text-decoration: none;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .btn.primary {
+      background: linear-gradient(180deg, var(--gold-1), var(--gold-3));
+      color: white;
+      border-color: transparent;
+    }
+
+    .btn.secondary {
+      background: transparent;
+    }
+
+    .status {
+      min-height: 22px;
+      margin: 8px 0 0;
+      color: var(--success);
+      font-weight: 700;
     }
 
     .program {
@@ -343,12 +557,12 @@
     }
 
     @media (max-width: 780px) {
-      .list { grid-template-columns: 1fr; }
-      .info-row { grid-template-columns: 1fr; }
+      .field-row, .list, .info-row { grid-template-columns: 1fr; }
       .seal { width: min(66vw, 320px); }
       .subtitle { letter-spacing: 0.16em; }
       .program-head { letter-spacing: 0.15em; }
       .footer-line { letter-spacing: 0.12em; }
+      .choice-group { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -360,40 +574,29 @@
           <defs>
             <path id="circleText" d="M 210 42 A 168 168 0 1 1 209.99 42" />
           </defs>
-
           <circle cx="210" cy="210" r="190" fill="rgba(255,255,255,0.75)" stroke="#d3a65a" stroke-width="5"/>
           <circle cx="210" cy="210" r="171" fill="none" stroke="#d3a65a" stroke-width="2.4" stroke-dasharray="1 5" opacity="0.9"/>
-
           <text font-size="18" font-family="Georgia, serif" font-weight="700" textLength="1020" letter-spacing="4" fill="#1a2f4f">
-            <textPath href="#circleText" startOffset="50%" text-anchor="middle">
-              日本バプテスト教会   日本バプテスト教会   日本バプテスト教会   日本バプテスト教会
-            </textPath>
+            <textPath href="#circleText" startOffset="50%" text-anchor="middle">日本バプテスト教会   日本バプテスト教会   日本バプテスト教会   日本バプテスト教会</textPath>
           </text>
-
           <text font-size="15" font-family="Georgia, serif" font-weight="700" textLength="980" letter-spacing="3" fill="#1a2f4f">
-            <textPath href="#circleText" startOffset="50%" text-anchor="middle" method="align" spacing="auto" transform="rotate(180 210 210)">
-              N.B.B.C  N.B.B.C  N.B.B.C  N.B.B.C
-            </textPath>
+            <textPath href="#circleText" startOffset="50%" text-anchor="middle" method="align" spacing="auto" transform="rotate(180 210 210)">N.B.B.C  N.B.B.C  N.B.B.C  N.B.B.C</textPath>
           </text>
-
           <g transform="translate(0 8)">
             <path d="M105 255 L210 108 L315 255 L315 288 L105 288 Z" fill="#0d294b" opacity="0.96"/>
             <path d="M118 250 L210 132 L302 250 L302 282 L118 282 Z" fill="#d9b76c" opacity="0.96"/>
             <path d="M155 255 L210 176 L265 255 L265 282 L155 282 Z" fill="#123c6b" opacity="0.9"/>
             <path d="M148 260 L210 198 L272 260 L272 282 L148 282 Z" fill="#f0d69e" opacity="0.92"/>
-
             <g fill="#0b2444">
               <rect x="178" y="170" width="14" height="70" rx="2"/>
               <rect x="228" y="170" width="14" height="70" rx="2"/>
               <path d="M160 170 L210 136 L260 170 L256 179 L210 149 L164 179 Z"/>
               <path d="M170 197 Q210 165 250 197" fill="none" stroke="#f0d69e" stroke-width="8" stroke-linecap="round"/>
             </g>
-
             <g fill="#f4efe6" font-family="Georgia, serif" font-weight="700" font-size="18" text-anchor="middle">
               <text x="210" y="246">N.B.B.C</text>
             </g>
           </g>
-
           <circle cx="210" cy="210" r="35" fill="rgba(255,255,255,0.3)" stroke="rgba(193,153,88,0.8)" stroke-width="2"/>
         </svg>
       </div>
@@ -407,6 +610,82 @@
       <p class="intro">
         Our choir and children’s choir invite you to celebrate the birth of Christ through timeless carols and joyful worship.
       </p>
+
+      <div class="rsvp-card" id="rsvp-card">
+        <div class="rsvp-header">
+          <h2>Will you join us?</h2>
+        </div>
+
+        <form id="rsvp-form" class="rsvp-form" novalidate>
+          <div class="field-row">
+            <div class="field">
+              <label for="name">Your name</label>
+              <input id="name" name="name" type="text" autocomplete="name" placeholder="Full name" />
+              <p class="error" id="err-name" aria-live="polite"></p>
+            </div>
+
+            <div class="field">
+              <label for="persons">How many persons?</label>
+              <input id="persons" name="persons" type="number" min="1" max="50" step="1" value="1" inputmode="numeric" />
+              <p class="help">Everyone coming, kids included.</p>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="kids">How many kids?</label>
+              <input id="kids" name="kids" type="number" min="0" max="50" step="1" value="0" inputmode="numeric" />
+              <p class="help">Part of the total.</p>
+            </div>
+
+            <div class="field">
+              <legend>Will you attend the church morning service?</legend>
+              <div class="choice-group">
+                <div class="choice">
+                  <input type="radio" id="svc-yes" name="service" value="Yes" />
+                  <label for="svc-yes">Yes</label>
+                </div>
+                <div class="choice">
+                  <input type="radio" id="svc-no" name="service" value="No" />
+                  <label for="svc-no">No</label>
+                </div>
+              </div>
+              <p class="error" id="err-service" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <div class="field">
+            <legend>Will you attend the Cantata only?</legend>
+            <div class="choice-group">
+              <div class="choice">
+                <input type="radio" id="can-yes" name="cantata" value="Yes" />
+                <label for="can-yes">Yes</label>
+              </div>
+              <div class="choice">
+                <input type="radio" id="can-no" name="cantata" value="No" />
+                <label for="can-no">No</label>
+              </div>
+            </div>
+            <p class="error" id="err-cantata" aria-live="polite"></p>
+          </div>
+
+          <p class="error" id="err-count" aria-live="polite"></p>
+          <button class="submit-btn" type="submit">Prepare my RSVP</button>
+        </form>
+      </div>
+
+      <div class="send-box" id="send-box" aria-live="polite">
+        <h3>Send your reply</h3>
+        <p class="notice">Your RSVP is ready but not sent yet. It goes to the host once you press send in your email.</p>
+        <textarea id="preview" readonly></textarea>
+        <div class="actions">
+          <a class="btn primary" id="gmail" href="#" target="_blank" rel="noopener">Open in Gmail</a>
+          <a class="btn secondary" id="mailto" href="#">Open in my mail app</a>
+          <button type="button" class="btn secondary" id="copy">Copy message</button>
+          <button type="button" class="btn secondary" id="edit">Change my answers</button>
+        </div>
+        <p class="status" id="copied"></p>
+      </div>
 
       <div class="program">
         <div class="program-head">The Program</div>
@@ -448,7 +727,128 @@
       </div>
     </div>
   </div>
+
+  <script>
+    (function () {
+      const TO = 'jonas.antonio0824@gmail.com';
+      const SUBJECT = 'RSVP: N.B.B.C Christmas Cantata, Dec 6, 2026';
+      const form = document.getElementById('rsvp-form');
+      const sendBox = document.getElementById('send-box');
+      const emailPreview = document.getElementById('preview');
+      const gmailLink = document.getElementById('gmail');
+      const mailtoLink = document.getElementById('mailto');
+      const copiedMessage = document.getElementById('copied');
+
+      function setError(id, msg) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.textContent = msg || '';
+      }
+
+      function radioValue(name) {
+        const checked = document.querySelector('input[name="' + name + '"]:checked');
+        return checked ? checked.value : '';
+      }
+
+      function whole(v) {
+        const n = Number(v);
+        return v !== '' && isFinite(n) && Math.floor(n) === n ? n : NaN;
+      }
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const name = document.getElementById('name').value.trim();
+        const persons = whole(document.getElementById('persons').value.trim());
+        const kids = whole(document.getElementById('kids').value.trim());
+        const service = radioValue('service');
+        const cantata = radioValue('cantata');
+
+        let valid = true;
+
+        if (!name) {
+          setError('err-name', 'Please enter your name.');
+          valid = false;
+        } else {
+          setError('err-name', '');
+        }
+
+        if (isNaN(persons) || persons < 1) {
+          setError('err-count', 'Enter at least 1 person.');
+          valid = false;
+        } else if (isNaN(kids) || kids < 0) {
+          setError('err-count', 'Enter 0 or more kids.');
+          valid = false;
+        } else if (kids > persons) {
+          setError('err-count', 'Kids cannot be more than the total number of persons.');
+          valid = false;
+        } else {
+          setError('err-count', '');
+        }
+
+        if (!service) {
+          setError('err-service', 'Please choose Yes or No.');
+          valid = false;
+        } else {
+          setError('err-service', '');
+        }
+
+        if (!cantata) {
+          setError('err-cantata', 'Please choose Yes or No.');
+          valid = false;
+        } else {
+          setError('err-cantata', '');
+        }
+
+        if (!valid) return;
+
+        const body = [
+          'RSVP for the N.B.B.C Christmas Cantata',
+          'Sunday, December 6, 2026, 3:00 PM to 6:00 PM',
+          '',
+          'Name: ' + name,
+          'Number of persons: ' + persons,
+          'Number of kids: ' + kids,
+          'Attending church morning service: ' + service,
+          'Attending Cantata only: ' + cantata
+        ].join('\n');
+
+        emailPreview.value = body;
+        gmailLink.href = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(TO) + '&su=' + encodeURIComponent(SUBJECT) + '&body=' + encodeURIComponent(body);
+        mailtoLink.href = 'mailto:' + TO + '?subject=' + encodeURIComponent(SUBJECT) + '&body=' + encodeURIComponent(body);
+        sendBox.classList.add('show');
+        sendBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        copiedMessage.textContent = '';
+      });
+
+      document.getElementById('edit').addEventListener('click', function () {
+        sendBox.classList.remove('show');
+        document.getElementById('name').focus();
+      });
+
+      document.getElementById('copy').addEventListener('click', function () {
+        const text = emailPreview.value;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () {
+            copiedMessage.textContent = 'Message copied.';
+          }, fallbackCopy);
+        } else {
+          fallbackCopy();
+        }
+      });
+
+      function fallbackCopy() {
+        emailPreview.focus();
+        emailPreview.select();
+        let done = false;
+        try {
+          done = document.execCommand('copy');
+        } catch (err) {
+          done = false;
+        }
+        copiedMessage.textContent = done ? 'Message copied.' : 'Message selected. Press and hold to copy it.';
+      }
+    })();
+  </script>
 </body>
 </html>
-
-
